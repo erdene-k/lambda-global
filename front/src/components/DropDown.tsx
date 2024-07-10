@@ -2,14 +2,13 @@
 import React, { useState } from "react";
 
 interface DropdownProps {
-  buttonLabel: string;
-  items: { label: string; href: string }[];
+  items:string[]
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ items }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [buttonLabel, setButtonLabel] = useState(
-    items.length > 0 ? items[0].label : "label"
+    items.length > 0 ? items[0] : "label"
   );
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -48,12 +47,12 @@ const Dropdown: React.FC<DropdownProps> = ({ items }) => {
             aria-labelledby="dropdownDefaultButton"
           >
             {items.map((item) => (
-              <li key={item.label}>
+              <li key={item}>
                 <p
-                  onClick={() => setButtonLabel(item.label)}
+                  onClick={() => setButtonLabel(item)}
                   className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                  {item.label}
+                  {item}
                 </p>
               </li>
             ))}
