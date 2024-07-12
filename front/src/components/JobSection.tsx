@@ -1,28 +1,29 @@
 "use client";
-import { Job } from "@/models/Job";
-import React, { FormEvent, useEffect, useState } from "react";
+import { Job } from "@/interfaces/Job";
+import React, { FormEvent, useState } from "react";
 import JobItem from "./JobItem";
 import Image from "next/image";
 import JobModal from "./JobModal";
 import { fetchAPI } from "@/lib/api";
 import { jobURL } from "@/lib/constants";
-import useSWR, {mutate} from "swr";
+import useSWR, { mutate } from "swr";
+import { SectionProps } from "@/interfaces/Props";
 
-const fetcher = (url: string) => fetchAPI('GET', url, {});
+const fetcher = (url: string) => fetchAPI("GET", url, {});
 
-const JobSection = () => {
+const JobSection: React.FC<SectionProps> = ({ selected, setSelected }) => {
   const [openModal, setModal] = useState(false);
   const { data: jobs, error } = useSWR<Job[]>(jobURL, fetcher);
 
   const handleModal = () => {
     setModal(!openModal);
   };
-  
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const values = Object.fromEntries(formData.entries());
-    await fetchAPI('POST', jobURL, values);
+    await fetchAPI("POST", jobURL, values);
     mutate(jobURL);
     setModal(false);
   }
@@ -34,7 +35,12 @@ const JobSection = () => {
     <div className="w-1/2 min-w-[50%]">
       <div className="max-h-screen overflow-y-scroll thin-scrollbar">
         {jobs.map((job, index) => (
-          <JobItem key={index} data={job} />
+          <JobItem
+            key={index}
+            data={job}
+            selected={selected}
+            setSelected={setSelected}
+          />
         ))}
       </div>
       <div
@@ -44,7 +50,11 @@ const JobSection = () => {
         <p>Add new job</p>
         <Image src="/icons/plus.svg" alt="plus" width={20} height={20} />
       </div>
-      <JobModal openModal={openModal} handleModal={handleModal} onSubmit={onSubmit} />
+      <JobModal
+        openModal={openModal}
+        handleModal={handleModal}
+        onSubmit={onSubmit}
+      />
     </div>
   );
 };

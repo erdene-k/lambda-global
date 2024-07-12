@@ -1,10 +1,10 @@
 import { url } from './constants';
 
-export async function fetchAPI(method: string = 'POST', route: string, data: any) {
+export async function fetchAPI(method: string = 'POST', route: string, data: any, uploadFile: boolean = false) {
   let requestConfig: RequestInit = {
     method: method,
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": uploadFile === true ? "multipart/form-data": "application/json"
     }
   };
 

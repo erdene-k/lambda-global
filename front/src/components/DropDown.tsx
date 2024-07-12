@@ -1,11 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-interface DropdownProps {
-  items:string[]
-}
-
-const Dropdown: React.FC<DropdownProps> = ({ items }) => {
+const Dropdown = ({ items }: {items:string[]}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [buttonLabel, setButtonLabel] = useState(
     items.length > 0 ? items[0] : "label"
