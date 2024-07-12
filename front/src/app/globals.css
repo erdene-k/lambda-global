@@ -20,11 +20,15 @@ body {
   margin:0px;
   padding: 0px;
   color: rgb(var(--foreground-rgb));
-  background-color:#fff
+  background-color:#fff;
+  overflow-x: hidden;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .thin-scrollbar {
+    scrollbar-width: thin;
   }
 }

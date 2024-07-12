@@ -1,20 +1,29 @@
+"use client";
 import { Resume } from "@/models/Resume";
-import React from "react";
+import React, { useState } from "react";
 import ResumeItem from "./ResumeItem";
+import Image from "next/image";
+import ResumeForm from "@/components/ResumeForm";
 
 const ResumeSection = () => {
-    const resumeList: Resume[] = [
-        {
-          name: "Software Developer Resume",
-          content: "Experienced software developer proficient in JavaScript, React, and Node.js.",
-        },
-        {
-          name: "UX/UI Designer Resume",
-          content: "Creative designer with expertise in user experience and interface design.",
-        },
-        {
-          name: "Data Analyst Resume",
-          content: `Analytical thinker skilled in SQL, Python, and data visualization.
+  const [addResume, setAddResume] = useState(false);
+  const toggleAddResume = () => {
+    setAddResume(!addResume);
+  };
+  const resumeList: Resume[] = [
+    {
+      name: "Software Developer Resume",
+      content:
+        "Experienced software developer proficient in JavaScript, React, and Node.js.",
+    },
+    {
+      name: "UX/UI Designer Resume",
+      content:
+        "Creative designer with expertise in user experience and interface design.",
+    },
+    {
+      name: "Data Analyst Resume",
+      content: `Analytical thinker skilled in SQL, Python, and data visualization.
           Analytical thinker skilled in SQL, Python, and data visualization.
           
           Analytical thinker skilled in SQL, Python, and data visualization.
@@ -24,14 +33,34 @@ const ResumeSection = () => {
           Analytical thinker skilled in SQL, Python, and data visualization.
           Analytical thinker skilled in SQL, Python, and data visualization.
           Analytical thinker skilled in SQL, Python, and data visualization.
-          Analytical thinker skilled in SQL, Python, and data visualization.`
-        },
-      ];
+          Analytical thinker skilled in SQL, Python, and data visualization.`,
+    },
+  ];
   return (
-    <div className="flex-col items-center  flex mx-10">
+    <div className="flex-col items-center flex mx-10">
       {resumeList.map((resume, index) => (
         <ResumeItem key={index} data={resume} />
       ))}
+      <div className="flex justify-center gap-2 m-4">
+        <div>
+          {!addResume ? (
+            <div
+              onClick={toggleAddResume}
+              className="flex gap-2 justify-center"
+            >
+              <p className="text-blue-600">Add new resume</p>
+              <Image src="/icons/plus-blue.svg" alt="plus" width={20} height={20} />
+            </div>
+          ) : (
+            <div onClick={toggleAddResume}>
+              <ResumeForm />
+              <p className="text-gray-400 text-center m-2 cursor-pointer">
+                Close
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

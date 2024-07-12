@@ -1,8 +1,14 @@
+"use client"
 import { Job, ProfessionLevel } from "@/models/Job";
-import React from "react";
+import React, { useState } from "react";
 import JobItem from "./JobItem";
-
+import Image from "next/image";
+import JobModal from "./JobModal";
 const JobSection = () => {
+  const [openModal, setModal] = useState(false);
+  const handleModal = () => {
+    setModal(!openModal)
+  }
   const jobs: Job[] = [
     {
       title: "Frontend Developer",
@@ -73,11 +79,19 @@ const JobSection = () => {
     },
   ];
   return (
-    <div className="h-screen overflow-y-scroll w-1/2 min-w-[50%]">
+   <div className="w-1/2 min-w-[50%]">
+     <div className="h-screen  overflow-y-scroll thin-scrollbar">
       {jobs.map((job, index) => (
         <JobItem key={index} data={job} />
       ))}
+     
     </div>
+     <div className="flex gap-2 justify-center p-4 m-4 cursor-pointer" onClick={handleModal}>
+     <p>Add new job</p>
+     <Image src="/icons/plus.svg" alt="plus" width={20} height={20}/>
+   </div>
+   <JobModal openModal={openModal} handleModal={handleModal}/>
+   </div>
   );
 };
 
