@@ -5,11 +5,16 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 
-export enum ProfessionLevel {
-  JUNIOR = 'JUNIOR',
-  MIDDLE = 'MIDDLE',
-  SENIOR = 'SENIOR',
-  LEAD = 'LEAD',
+export enum JobType {
+  FULLTIME = 'FULLTIME',
+  PARTTIME = 'PARTTIME',
+  CONTRACTOR = 'CONTRACTOR'
+}
+
+export enum Condition {
+  ONSITE = 'ONSITE',
+  REMOTE = 'REMOTE',
+  HYBRID = 'HYBRID'
 }
 
 @Entity()
@@ -24,26 +29,30 @@ export class Job {
   description: string;
 
   @Column('decimal')
-  salary: number;
-
-  @Column()
-  isRemote: boolean;
+  rate: number;
 
   @Column({
     type: 'enum',
-    enum: ProfessionLevel,
+    enum: JobType,
   })
-  professionLevel: ProfessionLevel;
+  jobType: JobType;
 
-  @Column({ nullable: true })
-  type?: string;
+  @Column({
+    type: 'enum',
+    enum: Condition,
+  })
+  condition: Condition;
 
   @Column('simple-array')
   skills: string[];
 
   @Column('simple-array')
-  requirements: string[];
+  responsibilities: string[];
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 }
+
+
+
+

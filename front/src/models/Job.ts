@@ -2,14 +2,21 @@ export interface Job
 {
     title: string,
     description: string,
-    salary: number,
-    isRemote: boolean,
-    professionLevel: ProfessionLevel,
-    type?: string,
+    rate: number,
+    jobType: JobType,
+    condition: Condition,
     skills:string[],
-    requirements:string[]
+    responsibilities:string[]
 }
 
-export enum ProfessionLevel{
-    JUNIOR, MIDDLE, SENIOR, LEAD
-}
+export enum JobType {
+    FULLTIME = 'FULLTIME',
+    PARTTIME = 'PARTTIME',
+    CONTRACTOR = 'CONTRACTOR'
+  }
+  
+  export enum Condition {
+    ONSITE = 'ONSITE',
+    REMOTE = 'REMOTE',
+    HYBRID = 'HYBRID'
+  }

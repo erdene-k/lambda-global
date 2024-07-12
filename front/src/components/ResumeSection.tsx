@@ -4,38 +4,23 @@ import React, { useState } from "react";
 import ResumeItem from "./ResumeItem";
 import Image from "next/image";
 import ResumeForm from "@/components/ResumeForm";
+import { fetchAPI } from "@/lib/api";
+import useSWR from "swr";
+import { resumeURL } from "@/lib/constants";
+
+const fetcher = (url: string) => fetchAPI('GET', url, {});
 
 const ResumeSection = () => {
   const [addResume, setAddResume] = useState(false);
   const toggleAddResume = () => {
     setAddResume(!addResume);
   };
-  const resumeList: Resume[] = [
-    {
-      name: "Software Developer Resume",
-      content:
-        "Experienced software developer proficient in JavaScript, React, and Node.js.",
-    },
-    {
-      name: "UX/UI Designer Resume",
-      content:
-        "Creative designer with expertise in user experience and interface design.",
-    },
-    {
-      name: "Data Analyst Resume",
-      content: `Analytical thinker skilled in SQL, Python, and data visualization.
-          Analytical thinker skilled in SQL, Python, and data visualization.
-          
-          Analytical thinker skilled in SQL, Python, and data visualization.
-          Analytical thinker skilled in SQL, Python, and data visualization.
-          Analytical thinker skilled in SQL, Python, and data visualization.
 
-          Analytical thinker skilled in SQL, Python, and data visualization.
-          Analytical thinker skilled in SQL, Python, and data visualization.
-          Analytical thinker skilled in SQL, Python, and data visualization.
-          Analytical thinker skilled in SQL, Python, and data visualization.`,
-    },
-  ];
+  const { data: resumeList, error } = useSWR<Resume[]>(resumeURL, fetcher);
+  if (error) return <div className="w-1/2 min-w-[50%] flex justify-center items-center"><strong>Failed to fetch</strong></div>;
+  if (!resumeList) return <div className="w-1/2 min-w-[50%] flex justify-center items-center"><strong>Loading...</strong></div>;
+
+
   return (
     <div className="flex-col items-center flex mx-10">
       {resumeList.map((resume, index) => (

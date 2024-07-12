@@ -1,7 +1,6 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString, IsEnum, IsArray } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, IsEnum, IsArray } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { ProfessionLevel } from '../job.entity';
-
+import { JobType, Condition } from '../job.entity';
 export class CreateJobDto {
   @IsString()
   @IsNotEmpty()
@@ -25,33 +24,25 @@ export class CreateJobDto {
     example: 60000,
     description: 'Job salary',
   })
-  readonly salary: number;
+  readonly rate: number;
 
-  @IsBoolean()
+  @IsEnum(JobType)
   @IsNotEmpty()
   @ApiProperty({
-    example: true,
-    description: 'Indicates if the job is remote',
-  })
-  readonly isRemote: boolean;
-
-  @IsEnum(ProfessionLevel)
-  @IsNotEmpty()
-  @ApiProperty({
-    example: ProfessionLevel.MIDDLE,
-    description: 'Profession level',
-    enum: ProfessionLevel,
-  })
-  readonly professionLevel: ProfessionLevel;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty({
-    example: 'Full-time',
+    example: JobType.FULLTIME,
     description: 'Job type',
-    required: false,
+    enum: JobType,
   })
-  readonly type?: string;
+  readonly jobType: JobType;
+
+  @IsEnum(Condition)
+  @IsNotEmpty()
+  @ApiProperty({
+    example: Condition.REMOTE,
+    description: 'Condition',
+    enum: Condition,
+  })
+  readonly condition: Condition;
 
   @IsArray()
   @IsString({ each: true })
@@ -66,8 +57,8 @@ export class CreateJobDto {
   @IsString({ each: true })
   @ApiProperty({
     example: ['Bachelor\'s degree in Computer Science', '3+ years of experience'],
-    description: 'List of job requirements',
+    description: 'List of job responsibilities',
     type: [String],
   })
-  readonly requirements: string[];
+  readonly responsibilities: string[];
 }

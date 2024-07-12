@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseResponseDto } from '../../base.response.dto';
+import { JobType, Condition } from '../job.entity'; // Adjust the path as necessary
 
 export class JobResponseDto extends BaseResponseDto {
   @ApiProperty({
@@ -7,12 +8,12 @@ export class JobResponseDto extends BaseResponseDto {
       id: 1,
       title: 'Software Developer',
       description: 'Responsible for developing and maintaining software applications.',
-      salary: 60000,
+      rate: 60000,
       isRemote: true,
-      professionLevel: 'MIDDLE',
-      type: 'Full-time',
+      jobType: 'FULLTIME',
+      condition: 'REMOTE',
       skills: ['JavaScript', 'TypeScript', 'React'],
-      requirements: ['Bachelor\'s degree in Computer Science', '3+ years of experience'],
+      responsibilities: ['Bachelor\'s degree in Computer Science', '3+ years of experience'],
       createdAt: '2024-07-11T07:19:56.503Z'
     },
     description: 'Job information',
@@ -30,7 +31,7 @@ export class JobResponseDto extends BaseResponseDto {
         description: 'Job description',
         type: 'string',
       },
-      salary: {
+      rate: {
         description: 'Job salary',
         type: 'number',
       },
@@ -38,14 +39,15 @@ export class JobResponseDto extends BaseResponseDto {
         description: 'Indicates if the job is remote',
         type: 'boolean',
       },
-      professionLevel: {
-        description: 'Profession level',
-        type: 'string',
-        enum: ['JUNIOR', 'MIDDLE', 'SENIOR', 'LEAD'],
-      },
-      type: {
+      jobType: {
         description: 'Job type',
         type: 'string',
+        enum: ['FULLTIME', 'PARTTIME', 'CONTRACTOR'],
+      },
+      condition: {
+        description: 'Job condition',
+        type: 'string',
+        enum: ['ONSITE', 'REMOTE', 'HYBRID'],
       },
       skills: {
         description: 'List of required skills',
@@ -54,8 +56,8 @@ export class JobResponseDto extends BaseResponseDto {
           type: 'string',
         },
       },
-      requirements: {
-        description: 'List of job requirements',
+      responsibilities: {
+        description: 'List of job responsibilities',
         type: 'array',
         items: {
           type: 'string',
@@ -72,12 +74,11 @@ export class JobResponseDto extends BaseResponseDto {
     id: number;
     title: string;
     description: string;
-    salary: number;
-    isRemote: boolean;
-    professionLevel: string;
-    type?: string;
+    rate: number;
+    jobType: JobType;
+    condition: Condition;
     skills: string[];
-    requirements: string[];
+    responsibilities: string[];
     createdAt: Date;
   };
 }

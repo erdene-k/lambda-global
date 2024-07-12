@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Job } from './job.entity';
-import { CreateJobDto } from './dto/create-job.dto';
+import { Job } from '../job/job.entity';
+import { CreateJobDto } from '../job/dto/create-job.dto';
 import { Resume } from 'src/resume/resume.entity';
 
 @Injectable()
