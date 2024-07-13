@@ -26,9 +26,7 @@ const ResumeItem: React.FC<ResumeItemProps> = ({
       <p className="text-gray-700 whitespace-pre-line">
         {isHovered ? data.content : truncatedContent}
       </p>
-      {!isHovered && data.content.length > maxLength && (
-        <span className="text-blue-400 m-2">Hover me</span>
-      )}
+      
     </div>
   );
 };

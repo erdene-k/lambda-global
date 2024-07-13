@@ -23,8 +23,6 @@ export class Match {
   @Column({ type: "text" })
   msg: string;
 
-  @Column({ nullable: true })
-  percentage?: number;
 }
 
 

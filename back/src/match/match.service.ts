@@ -18,7 +18,7 @@ export class MatchService {
     private matchRepository: Repository<Match>,
     private anthropic: Anthropic,
   ) {
-    this.anthropic = new Anthropic({apiKey: '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'});
+    this.anthropic = new Anthropic({apiKey: process.env.ANTHROPIC_API_KEY});
   }
 
   async match(job: Job, resume: Resume) {
