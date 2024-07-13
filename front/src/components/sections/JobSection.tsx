@@ -1,9 +1,9 @@
 "use client";
 import { Job } from "@/interfaces/Job";
 import React, { FormEvent, useState } from "react";
-import JobItem from "./JobItem";
+import JobItem from "../JobItem";
 import Image from "next/image";
-import JobModal from "./JobModal";
+import JobModal from "../JobModal";
 import { fetchAPI } from "@/lib/api";
 import { jobURL } from "@/lib/constants";
 import useSWR, { mutate } from "swr";
@@ -22,8 +22,18 @@ const JobSection: React.FC<SectionProps> = ({ selected, setSelected }) => {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
+
     const values = Object.fromEntries(formData.entries());
-    await fetchAPI("POST", jobURL, values);
+    const modifiedValues = {
+      ...values,
+      skills:
+        typeof values.skills === "string" ? values.skills.split(",") : [],
+      responsibilities:
+        typeof values.responsibilities === "string"
+          ? values.responsibilities.split("\n")
+          : [],
+    };
+    await fetchAPI("POST", jobURL, modifiedValues);
     mutate(jobURL);
     setModal(false);
   }

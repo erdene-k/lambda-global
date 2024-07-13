@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import Dropdown from "./DropDown";
-import { NavButton } from "./NavButton";
+import Dropdown from "../DropDown";
+import { NavButton } from "../NavButton";
 
 interface NavItemProps {
     href: string;
@@ -37,11 +37,11 @@ const Navbar = () => {
         </div>
         <div className="flex gap-8">
           <div className="flex gap-4">
-            <NavButton href="#" variant="primary">
-              Talent
+            <NavButton href="/matches" variant="primary">
+             See Matches
             </NavButton>
             <NavButton href="#" variant="secondary">
-              Recruiter
+              talent
             </NavButton>
           </div>
           <Dropdown items={["Mongolia", "English"]} />

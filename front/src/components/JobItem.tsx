@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { Job } from "@/interfaces/Job";
-import Image from "next/image";
 import { JobItemProps } from "@/interfaces/Props";
 
 const JobItem: React.FC<JobItemProps> = ({ data, selected, setSelected }) => {
@@ -15,7 +12,9 @@ const JobItem: React.FC<JobItemProps> = ({ data, selected, setSelected }) => {
     >
       <div className="flex justify-between items-center">
         <h2 className="text-l font-bold mb-2">{data.title}</h2>
-        <p className="text-cyan-950">{data.condition.toLowerCase()}</p>
+        <p className="text-cyan-950 underline">
+          {data.condition.toLowerCase()}
+        </p>
       </div>
       <p className="text-gray-700 mb-4">{data.description}</p>
 

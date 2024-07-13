@@ -1,14 +1,14 @@
 "use client";
 import { Resume } from "@/interfaces/Resume";
 import React, { useState } from "react";
-import ResumeItem from "./ResumeItem";
+import ResumeItem from "../ResumeItem";
 import Image from "next/image";
 import ResumeForm from "@/components/ResumeForm";
 import { fetchAPI } from "@/lib/api";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { resumeURL } from "@/lib/constants";
 import { SectionProps } from "@/interfaces/Props";
-
+import { uploadURL } from "@/lib/constants";
 const fetcher = (url: string) => fetchAPI("GET", url, {});
 
 const ResumeSection: React.FC<SectionProps> = ({ setSelected }) => {
@@ -17,12 +17,24 @@ const ResumeSection: React.FC<SectionProps> = ({ setSelected }) => {
   const toggleAddResume = () => {
     setAddResume(!addResume);
   };
+
+  const onFileChange =async(event: React.ChangeEvent<HTMLInputElement>) =>{
+    if (event.target.files) {
+      const formData = new FormData();
+      formData.append("file", event.target.files[0]);
+      await fetchAPI("POST", uploadURL, formData, true);
+      setTimeout(() => {
+        mutate(resumeURL);
+      }, 2000);
  
+    }
+  }
+
   if (error) return <div className="w-1/2 min-w-[50%] flex justify-center items-center"><strong>Failed to fetch</strong></div>;
   if (!resumeList) return <div className="w-1/2 min-w-[50%] flex justify-center items-center"><strong>Loading...</strong></div>;
 
   return (
-    <div className="flex-col items-center flex mx-10">
+    <div className="mx-4 pr-6">
       {resumeList.map((resume, index) => (
         <ResumeItem
           key={index}
@@ -47,7 +59,7 @@ const ResumeSection: React.FC<SectionProps> = ({ setSelected }) => {
             </div>
           ) : (
             <div>
-              <ResumeForm />
+              <ResumeForm onFileChange={onFileChange}/>
               <p className="text-gray-400 text-center m-2 cursor-pointer"  onClick={toggleAddResume}>
                 Close
               </p>

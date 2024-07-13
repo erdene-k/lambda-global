@@ -1,20 +1,7 @@
-"use client";
 import React, { useState, FormEvent } from "react";
 import Image from "next/image";
-import { fetchAPI } from "@/lib/api";
-import { uploadURL } from "@/lib/constants";
 
-const ResumeForm = () => {
-  const [file, setFile] = useState<File | null>(null);
-
-  const onFileChange =async(event: React.ChangeEvent<HTMLInputElement>) =>{
-    if (event.target.files) {
-      setFile(event.target.files[0]);
-      const formData = new FormData();
-      formData.append("file", event.target.files[0]);
-      // await fetchAPI("POST", uploadURL, formData, true)
-    }
-  }
+const ResumeForm = ({onFileChange}:{onFileChange: (event: React.ChangeEvent<HTMLInputElement>)=>void}) => {
 
   return (
     <form
@@ -37,7 +24,7 @@ const ResumeForm = () => {
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400">PDF/DOC</p>
           </div>
-          <input id="dropzone-file" type="file" className="hidden" multiple={false} onChange={onFileChange} accept="pdf/docs"/>
+          <input id="dropzone-file" type="file" className="hidden" multiple={false} onChange={onFileChange}/>
         </label>
       </div>
     </form>

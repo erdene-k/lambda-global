@@ -1,15 +1,19 @@
 import { url } from './constants';
 
 export async function fetchAPI(method: string = 'POST', route: string, data: any, uploadFile: boolean = false) {
+  let headers: { [key: string]: string } = {};
+
+  if (!uploadFile) {
+    headers["Content-Type"] = "application/json";
+  }
+
   let requestConfig: RequestInit = {
     method: method,
-    headers: {
-      "Content-Type": uploadFile === true ? "multipart/form-data": "application/json"
-    }
+    headers: new Headers(headers)
   };
 
   if (method === "POST") {
-    requestConfig.body = JSON.stringify(data);
+    requestConfig.body = uploadFile ? data : JSON.stringify(data);
   }
 
   const response = await fetch(`${url || 'http://localhost:3000'}/${route}`, requestConfig);
@@ -17,6 +21,6 @@ export async function fetchAPI(method: string = 'POST', route: string, data: any
     throw new Error("Failed to fetch API");
   }
   const result = await response.json();
-  
+
   return result;
 }

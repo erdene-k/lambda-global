@@ -4,7 +4,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as compression from 'compression';
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
-import cors from 'cors';
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -27,6 +27,6 @@ async function bootstrap() {
 
   await app.listen(port);
 
-  console.log('App listening: ', port);
+  console.log('App listening: http://localhost', port);
 }
 bootstrap();

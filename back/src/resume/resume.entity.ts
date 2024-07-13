@@ -5,7 +5,7 @@ export class Resume {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 'longtext' }) 
+  @Column({ type: "text" }) 
   content: string;
   
   @CreateDateColumn({ type: 'timestamp' })

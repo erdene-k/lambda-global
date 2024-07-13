@@ -1,18 +1,20 @@
 "use client";
-import JobSection from "@/components/JobSection";
-import ResumeSection from "@/components/ResumeSection";
+import JobSection from "@/components/sections/JobSection";
+import ResumeSection from "@/components/sections/ResumeSection";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [jobSelected, setJobSelected] = useState<number | null>(null);
   const [resumeSelected, setResumeSelected] = useState<number | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
-    if(!jobSelected){
-      setResumeSelected(null)
+    if (!jobSelected) {
+      setResumeSelected(null);
     }
-    if(jobSelected && resumeSelected){
-      console.log("broo", jobSelected, resumeSelected)
+    if (jobSelected && resumeSelected) {
+      router.push(`/result?job=${jobSelected}&resume=${resumeSelected}`);
     }
   }, [jobSelected, resumeSelected]);
 
@@ -25,7 +27,10 @@ export default function Home() {
       </div>
       <div className="flex mx-4 w-full">
         <JobSection selected={jobSelected} setSelected={setJobSelected} />
-        <ResumeSection selected={resumeSelected} setSelected={setResumeSelected}/>
+        <ResumeSection
+          selected={resumeSelected}
+          setSelected={setResumeSelected}
+        />
       </div>
     </main>
   );
