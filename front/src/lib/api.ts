@@ -16,7 +16,7 @@ export async function fetchAPI(method: string = 'POST', route: string, data: any
     requestConfig.body = uploadFile ? data : JSON.stringify(data);
   }
 
-  const response = await fetch(`${url || 'http://localhost:3000'}/${route}`, requestConfig);
+  const response = await fetch(`http://localhost:4000/${route}`, requestConfig);
   if (!response.ok) {
     throw new Error("Failed to fetch API");
   }

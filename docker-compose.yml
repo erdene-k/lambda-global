@@ -1,2 +1,42 @@
-# instatiate mysql db for local 
-$ docker run --name mydb -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql:8.0
+version: '1.0'
+
+services:
+  front:
+    build:
+      context: .
+      dockerfile: dockerfile
+    working_dir: /app/front
+    command: npm start
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front:/app/front
+    environment:
+      - PORT=3000
+
+  back:
+    build:
+      context: .
+      dockerfile: dockerfile
+    working_dir: /app/back
+    command: npm start
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mysql_db
+    volumes:
+      - ./back:/app/back
+    environment:
+      - PORT=4000
+      - NODE_ENV=production
+
+  mysql_db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=db
+      - MYSQL_TCP_PORT=3306
+
+  

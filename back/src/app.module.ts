@@ -12,11 +12,11 @@ import { Match } from './match/match.entity';
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'mysql_db',
       port: 3306,
+      database:'db',
       username: 'root',
       password: 'root',
-      database: 'mydb',
       entities: [Resume, Job, Match],
       synchronize: true,
     }),
