@@ -19,8 +19,8 @@ export default function Home() {
   }, [jobSelected, resumeSelected]);
 
   return (
-    <main>
-      <div className="flex items-center space-x-4 mx-6 py-4 ">
+    <main className="h-screen">
+      <div className="flex items-center space-x-4 mx-6 py-4">
         <h1 className="text-2xl font-bold text-gray-800 border-b w-1/">
           New Opportunities
         </h1>

@@ -42,7 +42,7 @@ const ResumeSection: React.FC<SectionProps> = ({ setSelected }) => {
           setSelected={setSelected}
         />
       ))}
-      <div className="flex justify-center gap-2 m-4">
+      <div className="flex justify-center gap-2 m-8">
         <div>
           {!addResume ? (
             <div
